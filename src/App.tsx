@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useState } from 'react';
+import TodosPage from './pages/Todo/TodosPage';
+import Calc from './pages/Calc/Calc';
+import AuthPage from './pages/Auth/AuthPage';
 
-function App() {
+import './styles/css/style.css';
+import CardFlip from './components/CardFlip/CardFlip';
+import TodosInfoPage from './pages/Todo/TodosInfoPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <BrowserRouter>
+        <CardFlip CardBackComponent={<TodosInfoPage />}>
+          <Routes>
+            <Route path="/" element={<TodosPage></TodosPage>} />
+            <Route path="widget" element={<TodosPage></TodosPage>} />
+            <Route path="calc" element={<Calc></Calc>} />
+          </Routes>
+        </CardFlip>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

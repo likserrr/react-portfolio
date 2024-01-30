@@ -1,0 +1,60 @@
+.wrapper {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.widget {
+  background-color: lightyellow;
+  border-radius: 25px;
+  min-width: 500px;
+  min-height: 150px;
+  padding: 20px;
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    padding: 10px 10px;
+    border: 0;
+    border-bottom: 1px solid black;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  span {
+    margin-top: 20px;
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  span::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: -10px;
+    height: 1px;
+    color: black;
+    background-color: black;
+  }
+
+  .operators {
+    margin-top: 10px;
+    button {
+      background-color: transparent;
+      cursor: pointer;
+      margin-right: 10px;
+      &:hover {
+        background-color: rgb(243, 243, 214);
+      }
+    }
+  }
+}

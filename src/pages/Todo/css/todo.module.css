@@ -1,0 +1,74 @@
+.widget {
+  position: relative;
+  background-color: lightyellow;
+  border-radius: 25px;
+  min-width: 500px;
+  min-height: 150px;
+  max-height: 80vh;
+  padding: 20px;
+}
+.widget .todo_wrap {
+  max-height: 200px;
+  height: 180px;
+  overflow-y: scroll;
+}
+.widget .todo_wrap::-webkit-scrollbar {
+  width: 10px;
+}
+.widget .todo_wrap::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  border: 1px solid #cacaca;
+}
+.widget .todo_wrap::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #d55959;
+}
+.widget .todo {
+  display: flex;
+  justify-content: center;
+}
+.widget h1 {
+  text-align: center;
+}
+.widget .clickable {
+  color: blue;
+  cursor: pointer;
+  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.widget .clickable:hover {
+  color: rgb(2, 2, 165);
+}
+.widget input {
+  padding: 10px 10px;
+  border: 0;
+  border-bottom: 1px solid black;
+  margin-right: 10px;
+}
+.widget input:last-child {
+  margin-right: 0;
+}
+.widget button {
+  margin-right: 10px;
+  background-color: transparent;
+  width: 40px;
+  cursor: pointer;
+}
+.widget button:hover {
+  background-color: rgb(247, 247, 214);
+}
+
+.author {
+  position: absolute;
+  bottom: 0;
+  text-align: left;
+}
+
+.widget_github {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  text-align: right;
+}/*# sourceMappingURL=todo.module.css.map */
