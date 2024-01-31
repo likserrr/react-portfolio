@@ -12,7 +12,6 @@
 /build
 
 /src/verstka
-/src/pages/Auth
 
 # misc
 .DS_Store
