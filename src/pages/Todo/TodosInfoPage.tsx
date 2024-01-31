@@ -34,7 +34,9 @@ const TodosInfoPage: FC = () => {
       <p className={styles.widget_github}>
         Check the code !
         <br />
-        <a href="https://github.com/likserrr" target="_blank">
+        <a
+          href="https://github.com/likserrr/react-portfolio/tree/main/src/pages/Todo"
+          target="_blank">
           GitHub && this widget
         </a>
       </p>

@@ -3,8 +3,9 @@ import CardFlip from './components/CardFlip/CardFlip';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import TodosInfoPage from './pages/Todo/TodosInfoPage';
 import TodosPage from './pages/Todo/TodosPage';
-import Calc from './pages/Calc/Calc';
+import Calc from './pages/Calc/CalcPage';
 import AuthPage from './pages/Auth/AuthPage';
+import CalcInfoPage from './pages/Calc/CalcInfoPage';
 
 const PageHandler = () => {
   const cardFlipAnimationDelay = 1000;
@@ -22,7 +23,7 @@ const PageHandler = () => {
       setPrevAppPath(null);
     }
     if (path === '/calc') {
-      setCardBackContent(<div>Yes, im calc Back</div>);
+      setCardBackContent(<CalcInfoPage />);
       setNextAppPath('auth');
       setPrevAppPath('widget');
     }

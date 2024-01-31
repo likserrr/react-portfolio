@@ -1,17 +1,10 @@
-.wrapper {
-  background-color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-family: "Montserrat", sans-serif;
-}
-
 .widget {
+  position: relative;
   background-color: lightyellow;
   border-radius: 25px;
   min-width: 500px;
   min-height: 150px;
+  max-height: 80vh;
   padding: 20px;
 }
 .widget h1 {
@@ -49,7 +42,24 @@
   background-color: transparent;
   cursor: pointer;
   margin-right: 10px;
+  width: 30px;
+  height: 30px;
 }
 .widget .operators button:hover {
   background-color: rgb(243, 243, 214);
+}
+.widget .author {
+  position: absolute;
+  bottom: 0;
+  text-align: left;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+.widget .widget_github {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  text-align: right;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
 }/*# sourceMappingURL=calc.css.map */
