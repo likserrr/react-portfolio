@@ -3,6 +3,8 @@ import './css/AuthStyles.css';
 import { IUser } from './IUser';
 import PostService from './PostService';
 
+// Use env This
+
 enum typesInfoText {
   queryLoad = 'queryLoad',
   authCheck = 'authCheck',
