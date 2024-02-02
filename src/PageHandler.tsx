@@ -22,9 +22,7 @@ const allRoute: { [key: string]: InfoPages } = {
 };
 
 const PageHandler = () => {
-  const [cardBackContent, setCardBackContent] = useState(() =>
-    getPageComponent(InfoPages.TODOS),
-  );
+  const [pageName, setPageName] = useState<InfoPages>(InfoPages.TODOS);
   const [nextAppPath, setNextAppPath] = useState<string | null>('calc');
   const [prevAppPath, setPrevAppPath] = useState<string | null>(null);
   const location = useLocation();
@@ -33,14 +31,14 @@ const PageHandler = () => {
     const path = location.pathname;
 
     if (allRoute.hasOwnProperty(path)) {
-      setCardBackContent(() => getPageComponent(allRoute[path]));
+      setPageName(allRoute[path]);
 
-      const keys = Object.keys(allRoute);
-      const pathIndex = keys.indexOf(path);
-      const nextKey = keys[pathIndex + 1];
-      const prevKey = keys[pathIndex - 1];
-      setNextAppPath(nextKey);
-      setPrevAppPath(prevKey);
+      const routes = Object.keys(allRoute);
+      const pathIndexRoute = routes.indexOf(path);
+      const nextRoute = routes[pathIndexRoute + 1];
+      const prevRoute = routes[pathIndexRoute - 1];
+      setNextAppPath(nextRoute);
+      setPrevAppPath(prevRoute);
     }
   }
 
@@ -67,7 +65,7 @@ const PageHandler = () => {
 
   return (
     <CardFlip
-      CardBackComponent={cardBackContent}
+      CardBackComponent={getPageComponent(pageName)}
       nextAppPath={nextAppPath}
       prevAppPath={prevAppPath}>
       <Routes>
