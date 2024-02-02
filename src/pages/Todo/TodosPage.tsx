@@ -1,10 +1,7 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Todo from './Todo';
 import styles from './css/todo.module.css';
 import TodoEvents from './TodoEvents';
-import TodosInfoPage from './TodosInfoPage';
-import CardFlip from '../../components/CardFlip/CardFlip';
-import { Link } from 'react-router-dom';
 
 export interface ITodo {
   id: number;

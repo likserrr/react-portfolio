@@ -12,6 +12,7 @@
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "axios": "^1.6.7",
+    "clsx": "^2.1.0",
     "dotenv": "^16.4.1",
     "fs": "^0.0.1-security",
     "react": "^18.2.0",
@@ -26,6 +27,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "copy-404": "copy 404.html build\\404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

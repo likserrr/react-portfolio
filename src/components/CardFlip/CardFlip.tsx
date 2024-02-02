@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import './css/card.css';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 
 interface ICardFlip {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element;
   CardBackComponent: JSX.Element;
   prevAppPath: string | null;
   nextAppPath: string | null;
@@ -18,34 +19,34 @@ const CardFlip: FC<ICardFlip> = ({
   const navigate = useNavigate();
   const [cardFlip, setCardFlip] = useState<boolean>(false);
 
+  function flipCard() {
+    setCardFlip(!cardFlip);
+  }
+
+  function routeNextApp() {
+    if (nextAppPath) navigate(nextAppPath, { replace: false });
+    flipCard();
+  }
+
+  function routePrevApp() {
+    if (prevAppPath) navigate(prevAppPath, { replace: false });
+    flipCard();
+  }
+
   return (
-    <div className={cardFlip ? 'flip-card flip' : 'flip-card'}>
-      <div className={cardFlip ? 'actions-page flipping' : 'actions-page'}>
-        {prevAppPath ? (
-          <button
-            onClick={() => {
-              navigate(prevAppPath, { replace: false });
-              setCardFlip(!cardFlip);
-            }}
-            className="flip-button prev-app">
+    <div className={clsx('flip-card', { flip: cardFlip })}>
+      <div className={clsx('actions-page', { flipping: cardFlip })}>
+        {Boolean(prevAppPath) && (
+          <button onClick={routePrevApp} className="flip-button prev-app">
             ← &nbsp;Prev App
           </button>
-        ) : (
-          <></>
         )}
-        {nextAppPath ? (
-          <button
-            onClick={() => {
-              navigate(nextAppPath, { replace: false });
-              setCardFlip(!cardFlip);
-            }}
-            className="flip-button next-app">
+        {Boolean(nextAppPath) && (
+          <button onClick={routeNextApp} className="flip-button next-app">
             Next App &nbsp;→
           </button>
-        ) : (
-          <></>
         )}
-        <button onClick={() => setCardFlip(!cardFlip)} className="flip-button">
+        <button onClick={flipCard} className="flip-button">
           Click Me!
         </button>
       </div>

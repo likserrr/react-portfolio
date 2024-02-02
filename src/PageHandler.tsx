@@ -7,30 +7,40 @@ import Calc from './pages/Calc/CalcPage';
 import AuthPage from './pages/Auth/AuthPage';
 import CalcInfoPage from './pages/Calc/CalcInfoPage';
 
-const PageHandler = () => {
-  const cardFlipAnimationDelay = 1000;
+const cardFlipAnimationDelay = 1000;
 
-  const [cardBackContent, setCardBackContent] = useState(<TodosInfoPage />);
+enum InfoPages {
+  TODOS = 'TODOS_INFO_PAGE',
+  CALC = 'CALC_INFO_PAGE',
+  AUTH = 'AUTH_INFO_PAGE',
+}
+
+const allRoute: { [key: string]: InfoPages } = {
+  '/widget': InfoPages.TODOS,
+  '/calc': InfoPages.CALC,
+  '/auth': InfoPages.AUTH,
+};
+
+const PageHandler = () => {
+  const [cardBackContent, setCardBackContent] = useState(() =>
+    getPageComponent(InfoPages.TODOS),
+  );
   const [nextAppPath, setNextAppPath] = useState<string | null>('calc');
   const [prevAppPath, setPrevAppPath] = useState<string | null>(null);
   const location = useLocation();
 
-  async function changeCardBack() {
+  function changeCardBack() {
     const path = location.pathname;
-    if (path === '/widget') {
-      setCardBackContent(<TodosInfoPage />);
-      setNextAppPath('calc');
-      setPrevAppPath(null);
-    }
-    if (path === '/calc') {
-      setCardBackContent(<CalcInfoPage />);
-      setNextAppPath('auth');
-      setPrevAppPath('widget');
-    }
-    if (path === '/auth') {
-      setCardBackContent(<div>Yes, im calc Back</div>);
-      setNextAppPath(null);
-      setPrevAppPath('calc');
+
+    if (allRoute.hasOwnProperty(path)) {
+      setCardBackContent(() => getPageComponent(allRoute[path]));
+
+      const keys = Object.keys(allRoute);
+      const pathIndex = keys.indexOf(path);
+      const nextKey = keys[pathIndex + 1];
+      const prevKey = keys[pathIndex - 1];
+      setNextAppPath(nextKey);
+      setPrevAppPath(prevKey);
     }
   }
 
@@ -40,6 +50,20 @@ const PageHandler = () => {
     }, cardFlipAnimationDelay);
     return () => clearTimeout(timer);
   }, [location.pathname]);
+
+  function getPageComponent(infoPageType: InfoPages) {
+    switch (infoPageType) {
+      case InfoPages.TODOS:
+        return <TodosInfoPage />;
+      case InfoPages.CALC:
+        return <CalcInfoPage />;
+      case InfoPages.AUTH:
+        return <div>Yes, im auth Back</div>;
+
+      default:
+        return <TodosInfoPage></TodosInfoPage>;
+    }
+  }
 
   return (
     <CardFlip

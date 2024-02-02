@@ -16,16 +16,16 @@ interface infoText {
 }
 
 const AuthPage: FC = () => {
-  const [users, setUsers] = useState<IUser[]>();
+  const [users, setUsers] = useState<IUser[]>([]);
   const [testUserInd, setTestUserInd] = useState(0);
+
+  const [inputEmailValue, setInputEmailValue] = useState<string>('');
+  const [inputPasswordValue, setInputPasswordValue] = useState<string>('');
 
   const [infoText, setInfoText] = useState<infoText>({
     type: typesInfoText.queryLoad,
     message: '',
   });
-
-  const EmailRef = useRef<HTMLInputElement>(null);
-  const PasswordRef = useRef<HTMLInputElement>(null);
 
   const [errorMes, setErrorMes] = useState<string>('');
 
@@ -35,19 +35,18 @@ const AuthPage: FC = () => {
 
   async function getDataUsers() {
     const answer = await PostService.indexPost();
-    const users: IUser[] = answer.data;
+    const users = answer.data;
     setUsers(users);
   }
 
   function changeUser() {
-    if (testUserInd == 9) return setTestUserInd(0);
+    if (testUserInd === 9) return setTestUserInd(0);
     setTestUserInd((prevIndex) => prevIndex + 1);
   }
 
-  function appendInputs(user: IUser) {
-    console.log(infoText.type === typesInfoText.queryLoad ?? '123');
-    if (EmailRef.current) EmailRef.current.value = user.username;
-    if (PasswordRef.current) PasswordRef.current.value = user.website;
+  function fillInputs(user: IUser) {
+    setInputEmailValue(user.username);
+    setInputPasswordValue(user.website);
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -56,13 +55,13 @@ const AuthPage: FC = () => {
       type: typesInfoText.authCheck,
       message: 'Запрашиваю сервер...',
     });
-    const username = EmailRef.current?.value;
-    const password = PasswordRef.current?.value;
-    if (!username) return setErrorMes('Username is null');
-    if (!password) return setErrorMes('Password is null');
+    const username = inputEmailValue;
+    const password = inputPasswordValue;
+    if (username === '') return setErrorMes('Username is null');
+    if (password === '') return setErrorMes('Password is null');
 
     const query = await PostService.authUserPost(username, password);
-    const authUser: IUser[] = query.data;
+    const authUser = query.data;
     if (authUser.length) {
       setErrorMes('');
       setInfoText({
@@ -77,6 +76,18 @@ const AuthPage: FC = () => {
     });
   };
 
+  function inputPasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputPasswordValue(event.target.value);
+  }
+
+  function inputEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputEmailValue(event.target.value);
+  }
+
+  function setErrorMesNull() {
+    setErrorMes('');
+  }
+
   return (
     <div className="widget">
       {!users ? (
@@ -85,48 +96,45 @@ const AuthPage: FC = () => {
         <>
           <h1>AuthForm</h1>
 
-          {infoText.type === typesInfoText.queryLoad ? (
+          {infoText.type === typesInfoText.queryLoad && (
             <p>
               Я подгрузил пользователей из jsonplaceholder
               <br />
               Для примера можете авторизоваться как{' '}
-              {users[testUserInd].username}
+              {users[testUserInd]?.username}
             </p>
-          ) : (
-            <></>
           )}
 
-          {infoText.type === typesInfoText.authCheck ? (
+          {infoText.type === typesInfoText.authCheck && (
             <p>
               {infoText.message}
               <br />
             </p>
-          ) : (
-            <></>
           )}
-
           <p style={{ marginTop: '5px' }}>
-            username: {users[testUserInd].username}
+            username: {users[testUserInd]?.username}
             <br />
-            password: {users[testUserInd].website}
+            password: {users[testUserInd]?.website}
           </p>
           <div style={{ marginTop: '5px' }} className="operators">
-            <p onClick={() => appendInputs(users[testUserInd])}>
+            <p onClick={() => fillInputs(users[testUserInd])}>
               Вставить значения
             </p>
-            <p onClick={() => changeUser()}>Другой пользователь</p>
+            <p onClick={changeUser}>Другой пользователь</p>
           </div>
           <p className="error">{errorMes}</p>
           <form onSubmit={handleSubmit} className="auth">
             <input
-              onFocus={() => setErrorMes('')}
-              ref={EmailRef}
+              onFocus={setErrorMesNull}
+              value={inputEmailValue}
+              onChange={(e) => inputEmailChange(e)}
               placeholder="Typing username..."
               type="text"
             />
             <input
-              onFocus={() => setErrorMes('')}
-              ref={PasswordRef}
+              onFocus={setErrorMesNull}
+              value={inputPasswordValue}
+              onChange={(e) => inputPasswordChange(e)}
               placeholder="Typing password..."
               type="text"
             />

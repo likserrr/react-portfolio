@@ -1,40 +1,20 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { ITodo } from './TodosPage';
 import styles from './css/todo.module.css';
 import TodoEvents from './TodoEvents';
+import { setNewTodoData } from './utils';
 
-enum todoField {
+export enum TodoField {
   name = 'todo_name',
   description = 'todo_desctiption',
   checkbox = 'todo_checkbox',
 }
 
-interface ITodoProps {
+export interface ITodoProps {
   todo: ITodo;
   ind: number;
   helper: TodoEvents;
 }
-
-const setNewTodoData = (
-  todoData: ITodo,
-  changeElem: HTMLInputElement,
-): ITodo => {
-  const todoChangeField = changeElem.dataset.todo_field;
-  switch (todoChangeField) {
-    case todoField.name:
-      todoData.name = changeElem.value;
-      break;
-    case todoField.description:
-      todoData.description = changeElem.value;
-      break;
-    case todoField.checkbox:
-      todoData.chacked = changeElem.checked;
-      break;
-    default:
-      break;
-  }
-  return todoData;
-};
 
 const Todo: FC<ITodoProps> = (props) => {
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +25,7 @@ const Todo: FC<ITodoProps> = (props) => {
   return (
     <div className={styles.todo}>
       <input
-        data-todo_field={todoField.name}
+        data-todo_field={TodoField.name}
         value={props.todo.name}
         placeholder={
           props.todo.name === '' ? 'Typing Any Name...' : props.todo.name
@@ -54,7 +34,7 @@ const Todo: FC<ITodoProps> = (props) => {
         type="text"
       />
       <input
-        data-todo_field={todoField.description}
+        data-todo_field={TodoField.description}
         value={props.todo.description}
         placeholder={
           props.todo.description === ''
@@ -65,7 +45,7 @@ const Todo: FC<ITodoProps> = (props) => {
         type="text"
       />
       <input
-        data-todo_field={todoField.checkbox}
+        data-todo_field={TodoField.checkbox}
         type="checkbox"
         checked={props.todo.chacked}
         onChange={changeHandler}

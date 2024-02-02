@@ -1,21 +1,21 @@
 import React, { FC, useRef, useState } from 'react';
 import './css/calc.css';
 
-const CalcPage: FC = () => {
-  enum CalcActions {
-    plus = 'PLUS',
-    minus = 'MINUS',
-    multiply = 'MULTIPLY',
-    divide = 'DIVIDE',
-  }
+enum CalcActions {
+  PLUS = 'PLUS',
+  MINUS = 'MINUS',
+  MULTIPLY = 'MULTIPLY',
+  DIVIDE = 'DIVIDE',
+}
 
+const CalcPage: FC = () => {
   const num1 = useRef<HTMLInputElement>(null);
   const num2 = useRef<HTMLInputElement>(null);
   const [ans, setAns] = useState<string>('Your Answer is:');
+  const [calcAction, setCalcAction] = useState<CalcActions>();
 
-  function calcHandler(e: React.MouseEvent<HTMLButtonElement>): void {
-    const calcCurrentAction = e.currentTarget.dataset?.calc_action;
-    if (!calcCurrentAction) return alert('Что-то пошло не так');
+  const calcHandler = () => {
+    const calcCurrentAction = calcAction;
 
     const num1Current = Number(num1.current?.value);
     const num2Current = Number(num2.current?.value);
@@ -23,20 +23,25 @@ const CalcPage: FC = () => {
     if (!num2Current) return setAns('Вы не ввели num2');
 
     switch (calcCurrentAction) {
-      case CalcActions.plus: // if (x === 'value1')
+      case CalcActions.PLUS:
         setAns(String(num1Current + num2Current));
         break;
-      case CalcActions.minus: // if (x === 'value1')
+      case CalcActions.MINUS:
         setAns(String(num1Current - num2Current));
         break;
-      case CalcActions.multiply: // if (x === 'value1')
+      case CalcActions.MULTIPLY:
         setAns(String(num1Current * num2Current));
         break;
-      case CalcActions.divide: // if (x === 'value1')
+      case CalcActions.DIVIDE:
         setAns(String(num1Current / num2Current));
         break;
     }
-  }
+  };
+
+  const actionHandler = (action: CalcActions) => {
+    setCalcAction(action);
+    calcHandler();
+  };
 
   return (
     <div className="widget">
@@ -47,26 +52,22 @@ const CalcPage: FC = () => {
       </div>
       <div className="operators">
         <button
-          onClick={calcHandler}
-          data-calc_action={CalcActions.plus}
+          onClick={() => actionHandler(CalcActions.PLUS)}
           className="plus">
           +
         </button>
         <button
-          onClick={calcHandler}
-          data-calc_action={CalcActions.minus}
+          onClick={() => actionHandler(CalcActions.MINUS)}
           className="minus">
           -
         </button>
         <button
-          onClick={calcHandler}
-          data-calc_action={CalcActions.multiply}
-          className="multiply">
+          onClick={() => actionHandler(CalcActions.MULTIPLY)}
+          className="multipy">
           *
         </button>
         <button
-          onClick={calcHandler}
-          data-calc_action={CalcActions.divide}
+          onClick={() => actionHandler(CalcActions.DIVIDE)}
           className="divide">
           /
         </button>
