@@ -34,6 +34,12 @@ export default class TodoEvents {
     this.props.setTodos(newTodos);
   }
 
+  // editTodo(newTodoData: ITodo, indEditTodo: number): void {
+  //   const newTodos = [...this.props.todos];
+  //   newTodos[indEditTodo] = newTodoData;
+  //   this.props.setTodos(newTodos);
+  // }
+
   editTodo(newTodoData: ITodo, indEditTodo: number): void {
     const newTodos = [...this.props.todos];
     newTodos[indEditTodo] = newTodoData;

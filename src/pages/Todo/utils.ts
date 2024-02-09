@@ -1,7 +1,7 @@
 import { TodoField } from './Todo';
 import { ITodo } from './TodosPage';
 
-const setNewTodoData = (
+const getNewTodoData = (
   todoData: ITodo,
   changeElem: HTMLInputElement,
 ): ITodo => {
@@ -22,4 +22,4 @@ const setNewTodoData = (
   return todoData;
 };
 
-export { setNewTodoData };
+export { getNewTodoData };

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import CardFlip from './components/CardFlip/CardFlip';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import TodosInfoPage from './pages/Todo/TodosInfoPage';
@@ -7,7 +7,7 @@ import Calc from './pages/Calc/CalcPage';
 import AuthPage from './pages/Auth/AuthPage';
 import CalcInfoPage from './pages/Calc/CalcInfoPage';
 
-const cardFlipAnimationDelay = 1000;
+const cardFlipAnimationDelay = 800;
 
 enum InfoPages {
   TODOS = 'TODOS_INFO_PAGE',
@@ -26,8 +26,9 @@ const PageHandler = () => {
   const [nextAppPath, setNextAppPath] = useState<string | null>('calc');
   const [prevAppPath, setPrevAppPath] = useState<string | null>(null);
   const location = useLocation();
+  console.log('PageHandler render');
 
-  function changeCardBack() {
+  const changeCardBack = useCallback(() => {
     const path = location.pathname;
 
     if (allRoute.hasOwnProperty(path)) {
@@ -40,16 +41,16 @@ const PageHandler = () => {
       setNextAppPath(nextRoute);
       setPrevAppPath(prevRoute);
     }
-  }
+  }, [location.pathname]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       changeCardBack();
     }, cardFlipAnimationDelay);
     return () => clearTimeout(timer);
-  }, [location.pathname]);
+  }, [location.pathname, changeCardBack]);
 
-  function getPageComponent(infoPageType: InfoPages) {
+  function getInfoPageContent(infoPageType: InfoPages) {
     switch (infoPageType) {
       case InfoPages.TODOS:
         return <TodosInfoPage />;
@@ -65,9 +66,10 @@ const PageHandler = () => {
 
   return (
     <CardFlip
-      CardBackComponent={getPageComponent(pageName)}
+      cardBackContent={getInfoPageContent(pageName)}
       nextAppPath={nextAppPath}
-      prevAppPath={prevAppPath}>
+      prevAppPath={prevAppPath}
+      cardFlipAnimationDelay={cardFlipAnimationDelay}>
       <Routes>
         <Route path="/" element={<TodosPage></TodosPage>} />
         <Route path="widget" element={<TodosPage></TodosPage>} />

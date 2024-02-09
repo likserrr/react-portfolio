@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ITodo } from './TodosPage';
 import styles from './css/todo.module.css';
 import TodoEvents from './TodoEvents';
-import { setNewTodoData } from './utils';
+import { getNewTodoData } from './utils';
 
 export enum TodoField {
   name = 'todo_name',
@@ -18,7 +18,7 @@ export interface ITodoProps {
 
 const Todo: FC<ITodoProps> = (props) => {
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTodo = setNewTodoData(props.todo, e.target);
+    const newTodo = getNewTodoData(props.todo, e.target);
     props.helper.editTodo(newTodo, props.ind);
   };
 

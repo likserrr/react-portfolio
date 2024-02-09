@@ -48,6 +48,17 @@ const TodosPage: FC = () => {
     setTodosRemoveId,
   });
 
+  // const todoEventHandler = {
+  //   editTodo: (newTodos: ITodo[]) => setTodos(newTodos),
+  // };
+
+  // const todoEventHandler = {
+  //   editTodo: (newTodo: ITodo, ind: number) => {
+  //     const newTodos = todoEventHelper.editTodo(newTodo, ind);
+  //     setTodos(newTodos);
+  //   },
+  // };
+
   useEffect(() => {
     const JSONtodos = localStorage.getItem('todos');
     const JSONtodosRemoveId = localStorage.getItem('todosRemoveId');
